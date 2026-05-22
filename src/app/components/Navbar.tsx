@@ -80,6 +80,7 @@ export function Navbar() {
             { href: '/features', label: tx.nav.features },
             { href: '/how-it-works', label: tx.nav.howItWorks },
             { href: '/faq', label: tx.nav.faq },
+            { href: '/#contact', label: tx.nav.contact },
           ].map(({ href, label }) => (
             <Link
               key={href}

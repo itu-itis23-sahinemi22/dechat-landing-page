@@ -6,6 +6,7 @@ export const t = {
       features: 'Özellikler',
       howItWorks: 'Nasıl Çalışır',
       faq: 'SSS',
+      contact: 'İletişim',
       download: 'İndir (Yakında)',
     },
     hero: {
@@ -152,11 +153,27 @@ export const t = {
         },
       ],
     },
+    contact: {
+      pageTitle: 'Bize Ulaşın',
+      subtitle: 'Soru, öneri veya iş birliği için yazın.',
+      emailLabel: 'E-posta',
+      emailDesc: 'En kısa sürede yanıt veririz.',
+      email: 'info@dechat.tech',
+      form: {
+        name: 'Ad Soyad',
+        namePlaceholder: 'Adınızı girin',
+        email: 'E-posta',
+        emailPlaceholder: 'ornek@email.com',
+        message: 'Mesaj',
+        messagePlaceholder: 'Mesajınızı buraya yazın...',
+        submit: 'Gönder',
+      },
+    },
     footer: {
       tagline: 'Merkeziyetsiz mesajlaşma platformu',
       rights: '2026 DeChat',
       networkActive: 'Ağ İnaktif (Yakında!)',
-      links: ['Özellikler', 'Nasıl Çalışır', 'SSS', 'İndir'],
+      links: ['Özellikler', 'Nasıl Çalışır', 'SSS', 'İndir', 'İletişim'],
     },
   },
   en: {
@@ -164,6 +181,7 @@ export const t = {
       features: 'Features',
       howItWorks: 'How It Works',
       faq: 'FAQ',
+      contact: 'Contact',
       download: 'Download (Soon)',
     },
     hero: {
@@ -310,11 +328,27 @@ export const t = {
         },
       ],
     },
+    contact: {
+      pageTitle: 'Contact Us',
+      subtitle: 'Reach out for questions, feedback, or partnerships.',
+      emailLabel: 'Email',
+      emailDesc: 'We reply as soon as possible.',
+      email: 'info@dechat.tech',
+      form: {
+        name: 'Full Name',
+        namePlaceholder: 'Enter your name',
+        email: 'Email',
+        emailPlaceholder: 'example@email.com',
+        message: 'Message',
+        messagePlaceholder: 'Write your message here...',
+        submit: 'Send',
+      },
+    },
     footer: {
       tagline: 'Decentralized messaging platform',
       rights: '2026 DeChat',
       networkActive: 'Network Inactive (Soon!)',
-      links: ['Features', 'How It Works', 'FAQ'],
+      links: ['Features', 'How It Works', 'FAQ', 'Contact'],
     },
   },
 };

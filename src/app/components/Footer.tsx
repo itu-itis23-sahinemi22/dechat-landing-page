@@ -16,6 +16,8 @@ export function Footer() {
     'How It Works': '/how-it-works',
     SSS: '/faq',
     FAQ: '/faq',
+    İletişim: '/#contact',
+    Contact: '/#contact',
   };
 
   return (
