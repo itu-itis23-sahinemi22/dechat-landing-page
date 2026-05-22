@@ -33,6 +33,7 @@ function MoonIcon() {
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const { lang, setLang } = useLang();
   const { theme, toggleTheme } = useTheme();
   const pathname = usePathname();
@@ -44,6 +45,9 @@ export function Navbar() {
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  // Close menu on route change
+  useEffect(() => { setMenuOpen(false); }, [pathname]);
 
   const navBg = isHero
     ? scrolled ? 'rgba(10,11,13,0.88)' : 'transparent'
@@ -60,82 +64,157 @@ export function Navbar() {
 
   const isActive = (href: string) => pathname === href;
 
+  const navLinks = [
+    { href: '/features', label: tx.nav.features },
+    { href: '/how-it-works', label: tx.nav.howItWorks },
+    { href: '/faq', label: tx.nav.faq },
+    { href: '/#contact', label: tx.nav.contact },
+  ];
+
+  const mobileBg = isHero ? 'rgba(10,11,13,0.97)' : 'var(--dc-nav-bg)';
+  const mobileBorder = isHero ? 'rgba(255,255,255,0.08)' : 'var(--dc-nav-border)';
+  const mobileLinkColor = isHero ? 'rgba(255,255,255,0.75)' : 'var(--dc-nav-text)';
+
   return (
-    <header
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-      style={{ background: navBg, backdropFilter: 'blur(12px)', borderBottom }}
-    >
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 md:px-10 py-4">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <Image src="/logo.png" alt="DeChat" width={38} height={38} className="object-contain" />
-          <span className="text-xl font-bold transition-colors" style={{ color: logoNameColor }}>
-            De<span style={{ color: 'var(--dc-accent)' }}>Chat</span>
-          </span>
-        </Link>
+    <>
+      <header
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+        style={{ background: navBg, backdropFilter: 'blur(12px)', borderBottom }}
+      >
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 md:px-10 py-4">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-3 group">
+            <Image src="/logo.png" alt="DeChat" width={38} height={38} className="object-contain" />
+            <span className="text-xl font-bold transition-colors" style={{ color: logoNameColor }}>
+              De<span style={{ color: 'var(--dc-accent)' }}>Chat</span>
+            </span>
+          </Link>
 
-        {/* Nav links */}
-        <nav className="hidden md:flex items-center gap-8">
-          {[
-            { href: '/features', label: tx.nav.features },
-            { href: '/how-it-works', label: tx.nav.howItWorks },
-            { href: '/faq', label: tx.nav.faq },
-            { href: '/#contact', label: tx.nav.contact },
-          ].map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              className="text-sm font-medium transition-colors"
-              style={{ color: isActive(href) ? 'var(--dc-accent)' : textColor }}
-              onMouseEnter={e => (e.currentTarget.style.color = isActive(href) ? 'var(--dc-accent)' : textHover)}
-              onMouseLeave={e => (e.currentTarget.style.color = isActive(href) ? 'var(--dc-accent)' : textColor)}
-            >
-              {label}
-            </Link>
-          ))}
-        </nav>
-
-        {/* Right: theme toggle + lang toggle + download */}
-        <div className="flex items-center gap-3">
-          {/* Theme toggle */}
-          <button
-            onClick={toggleTheme}
-            className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors"
-            style={{ color: iconColor }}
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
-          </button>
-
-          {/* Lang toggle */}
-          <div
-            className="flex items-center rounded-xl overflow-hidden border"
-            style={{ borderColor: isHero ? 'rgba(255,255,255,0.15)' : 'var(--dc-lang-border)' }}
-          >
-            {(['tr', 'en'] as Lang[]).map((l) => (
-              <button
-                key={l}
-                onClick={() => setLang(l)}
-                className="px-3 py-1.5 text-xs font-semibold uppercase transition-all duration-200"
-                style={{
-                  background: lang === l ? 'var(--dc-accent)' : 'transparent',
-                  color: lang === l ? '#fff' : textColor,
-                }}
+          {/* Desktop nav links */}
+          <nav className="hidden md:flex items-center gap-8">
+            {navLinks.map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className="text-sm font-medium transition-colors"
+                style={{ color: isActive(href) ? 'var(--dc-accent)' : textColor }}
+                onMouseEnter={e => (e.currentTarget.style.color = isActive(href) ? 'var(--dc-accent)' : textHover)}
+                onMouseLeave={e => (e.currentTarget.style.color = isActive(href) ? 'var(--dc-accent)' : textColor)}
               >
-                {l}
-              </button>
+                {label}
+              </Link>
             ))}
-          </div>
+          </nav>
 
-          <a
-            href="#"
-            className="hidden sm:block px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5"
-            style={{ background: 'var(--dc-accent)' }}
-          >
-            {tx.nav.download}
-          </a>
+          {/* Right controls */}
+          <div className="flex items-center gap-3">
+            {/* Theme toggle */}
+            <button
+              onClick={toggleTheme}
+              className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors"
+              style={{ color: iconColor }}
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
+            </button>
+
+            {/* Lang toggle */}
+            <div
+              className="flex items-center rounded-xl overflow-hidden border"
+              style={{ borderColor: isHero ? 'rgba(255,255,255,0.15)' : 'var(--dc-lang-border)' }}
+            >
+              {(['tr', 'en'] as Lang[]).map((l) => (
+                <button
+                  key={l}
+                  onClick={() => setLang(l)}
+                  className="px-3 py-1.5 text-xs font-semibold uppercase transition-all duration-200"
+                  style={{
+                    background: lang === l ? 'var(--dc-accent)' : 'transparent',
+                    color: lang === l ? '#fff' : textColor,
+                  }}
+                >
+                  {l}
+                </button>
+              ))}
+            </div>
+
+            {/* Early Access CTA — desktop only */}
+            <a
+              href="/#contact"
+              className="hidden md:block px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5"
+              style={{ background: 'var(--dc-accent)' }}
+            >
+              {tx.nav.earlyAccess}
+            </a>
+
+            {/* Hamburger — mobile only */}
+            <button
+              onClick={() => setMenuOpen(v => !v)}
+              className="md:hidden w-9 h-9 flex flex-col items-center justify-center gap-[5px] rounded-lg"
+              style={{ color: iconColor }}
+              aria-label="Toggle menu"
+            >
+              <span
+                className="w-5 h-[2px] rounded-full bg-current transition-all duration-300 origin-center"
+                style={menuOpen ? { transform: 'translateY(7px) rotate(45deg)' } : {}}
+              />
+              <span
+                className="w-5 h-[2px] rounded-full bg-current transition-all duration-200"
+                style={menuOpen ? { opacity: 0 } : {}}
+              />
+              <span
+                className="w-5 h-[2px] rounded-full bg-current transition-all duration-300 origin-center"
+                style={menuOpen ? { transform: 'translateY(-7px) rotate(-45deg)' } : {}}
+              />
+            </button>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+
+      {/* Mobile dropdown menu */}
+      {menuOpen && (
+        <>
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 z-40 md:hidden"
+            onClick={() => setMenuOpen(false)}
+          />
+          {/* Panel */}
+          <div
+            className="fixed top-[66px] left-0 right-0 z-50 md:hidden"
+            style={{
+              background: mobileBg,
+              backdropFilter: 'blur(16px)',
+              borderBottom: `1px solid ${mobileBorder}`,
+            }}
+          >
+            <nav className="px-6 py-4 flex flex-col gap-1">
+              {navLinks.map(({ href, label }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  onClick={() => setMenuOpen(false)}
+                  className="py-3 text-base font-medium transition-colors border-b"
+                  style={{
+                    color: isActive(href) ? 'var(--dc-accent)' : mobileLinkColor,
+                    borderColor: mobileBorder,
+                  }}
+                >
+                  {label}
+                </Link>
+              ))}
+              <a
+                href="/#contact"
+                onClick={() => setMenuOpen(false)}
+                className="mt-4 w-full py-3 rounded-xl text-sm font-semibold text-white text-center transition-all hover:opacity-90"
+                style={{ background: 'var(--dc-accent)' }}
+              >
+                {tx.nav.earlyAccess}
+              </a>
+            </nav>
+          </div>
+        </>
+      )}
+    </>
   );
 }

@@ -84,7 +84,7 @@ export function LandingPage() {
             </div>
 
             <div className="flex items-center gap-6">
-              <a href="#" className="text-sm font-medium transition-colors hover:opacity-80" style={{ color: '#183EE9' }}>
+              <a href="#" className="hidden sm:inline text-sm font-medium transition-colors hover:opacity-80" style={{ color: '#183EE9' }}>
                 {tx.hero.tryWeb}
               </a>
               <Link href="/features" className="text-sm font-medium transition-colors hover:opacity-80" style={{ color: 'rgba(255,255,255,0.45)' }}>

@@ -8,129 +8,100 @@ export function ContactSection() {
   const { lang } = useLang();
   const contact = t[lang].contact;
 
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`DeChat Contact: ${name}`);
-    const body = encodeURIComponent(`From: ${name}\nEmail: ${email}\n\n${message}`);
+    const subject = encodeURIComponent('DeChat Early Access');
+    const body = encodeURIComponent(`Email: ${email}`);
     window.location.href = `mailto:${contact.email}?subject=${subject}&body=${body}`;
-  };
-
-  const inputStyle: React.CSSProperties = {
-    background: 'var(--dc-card)',
-    border: '1px solid var(--dc-border)',
-    color: 'var(--dc-text-1)',
-    borderRadius: '0.75rem',
-    padding: '0.75rem 1rem',
-    width: '100%',
-    outline: 'none',
-    fontSize: '0.875rem',
+    setSubmitted(true);
   };
 
   return (
     <section
       id="contact"
-      className="px-6 md:px-10 lg:px-16 py-20"
-      style={{ background: 'linear-gradient(to bottom, var(--dc-bg), var(--dc-bg-subtle))' }}
+      className="relative px-6 md:px-10 lg:px-16 py-24 overflow-hidden"
+      style={{ background: 'linear-gradient(160deg, #0A0B0D 0%, #01024F 60%, #0a1a6e 100%)' }}
     >
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <h2
-            className="text-4xl md:text-5xl font-extrabold tracking-tight"
-            style={{ color: 'var(--dc-text-1)' }}
-          >
-            {contact.pageTitle}
-          </h2>
-          <p className="mt-4 text-lg" style={{ color: 'var(--dc-text-2)' }}>
-            {contact.subtitle}
-          </p>
-        </div>
+      {/* Grid pattern */}
+      <div
+        className="absolute inset-0 opacity-[0.04] pointer-events-none"
+        style={{
+          backgroundImage: 'linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)',
+          backgroundSize: '60px 60px',
+        }}
+      />
+      {/* Glow */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full pointer-events-none"
+        style={{ background: 'radial-gradient(circle, rgba(24,62,233,0.22) 0%, transparent 70%)' }}
+      />
 
-        <div className="grid md:grid-cols-2 gap-10">
-          {/* Email card */}
+      <div className="relative max-w-2xl mx-auto text-center">
+        {/* Badge */}
+        <span
+          className="inline-block text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-6"
+          style={{ background: 'rgba(24,62,233,0.25)', color: '#a5b4fc' }}
+        >
+          {contact.pageTitle}
+        </span>
+
+        <h2 className="text-4xl md:text-5xl font-extrabold text-white leading-tight tracking-tight mb-4">
+          {contact.pageTitle}
+        </h2>
+        <p className="text-lg mb-10" style={{ color: 'rgba(255,255,255,0.55)' }}>
+          {contact.subtitle}
+        </p>
+
+        {submitted ? (
           <div
-            className="flex flex-col justify-center rounded-2xl p-8 gap-5"
-            style={{ background: 'var(--dc-card)', border: '1px solid var(--dc-border)' }}
+            className="inline-flex items-center gap-3 px-6 py-4 rounded-2xl"
+            style={{ background: 'rgba(24,62,233,0.2)', border: '1px solid rgba(74,108,247,0.4)' }}
           >
-            <div
-              className="w-14 h-14 rounded-2xl flex items-center justify-center"
-              style={{ background: 'var(--dc-badge-bg)' }}
-            >
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--dc-accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                <polyline points="22,6 12,13 2,6" />
-              </svg>
-            </div>
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: 'var(--dc-text-2)' }}>
-                {contact.emailLabel}
-              </p>
-              <a
-                href={`mailto:${contact.email}`}
-                className="text-lg font-semibold transition-opacity hover:opacity-70"
-                style={{ color: 'var(--dc-accent)' }}
-              >
-                {contact.email}
-              </a>
-              <p className="mt-2 text-sm" style={{ color: 'var(--dc-text-2)' }}>
-                {contact.emailDesc}
-              </p>
-            </div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span className="text-base font-medium" style={{ color: '#a5b4fc' }}>
+              {contact.form.successMsg}
+            </span>
           </div>
-
-          {/* Contact form */}
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <div>
-              <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--dc-text-1)' }}>
-                {contact.form.name}
-              </label>
-              <input
-                type="text"
-                required
-                placeholder={contact.form.namePlaceholder}
-                value={name}
-                onChange={e => setName(e.target.value)}
-                style={inputStyle}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--dc-text-1)' }}>
-                {contact.form.email}
-              </label>
-              <input
-                type="email"
-                required
-                placeholder={contact.form.emailPlaceholder}
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                style={inputStyle}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--dc-text-1)' }}>
-                {contact.form.message}
-              </label>
-              <textarea
-                required
-                rows={5}
-                placeholder={contact.form.messagePlaceholder}
-                value={message}
-                onChange={e => setMessage(e.target.value)}
-                style={{ ...inputStyle, resize: 'none' }}
-              />
-            </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+            <input
+              type="email"
+              required
+              placeholder={contact.form.emailPlaceholder}
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              className="flex-1 px-4 py-3 rounded-xl text-sm outline-none"
+              style={{
+                background: 'rgba(255,255,255,0.07)',
+                border: '1px solid rgba(255,255,255,0.12)',
+                color: '#fff',
+              }}
+            />
             <button
               type="submit"
-              className="w-full py-3 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5"
+              className="px-6 py-3 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5 whitespace-nowrap"
               style={{ background: 'var(--dc-accent)' }}
             >
               {contact.form.submit}
             </button>
           </form>
-        </div>
+        )}
+
+        <p className="mt-6 text-sm" style={{ color: 'rgba(255,255,255,0.3)' }}>
+          {contact.emailDesc}{' '}
+          <a
+            href={`mailto:${contact.email}`}
+            className="transition-opacity hover:opacity-80"
+            style={{ color: 'rgba(255,255,255,0.5)' }}
+          >
+            {contact.email}
+          </a>
+        </p>
       </div>
     </section>
   );
