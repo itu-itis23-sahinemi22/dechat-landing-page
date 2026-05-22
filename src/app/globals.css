@@ -1,26 +1,76 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  /* Primary */
+  --color-primary: #183EE9;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  /* Secondary */
+  --color-secondary-light: #E8ECFD;
+  --color-secondary-dark: #01024F;
+
+  /* Background */
+  --color-bg-light: #FFFFFF;
+  --color-bg-light-muted: #EEEFF3;
+  --color-bg-dark: #282B32;
+  --color-bg-dark-deep: #0A0B0D;
+
+  /* Text */
+  --color-text-light: #0A0B0F;
+  --color-text-dark: #FBFCFF;
+  --color-text-grey: #707579;
+
+  /* Other */
+  --color-red: #DF0206;
+  --color-green: #00C950;
+
+  /* Fonts */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Semantic theme tokens ── */
+:root {
+  --dc-bg:               #ffffff;
+  --dc-bg-subtle:        #E8ECFD;
+  --dc-text-1:           #01024F;
+  --dc-text-2:           #707579;
+  --dc-accent:           #183EE9;
+  --dc-card:             #ffffff;
+  --dc-border:           rgba(1,2,79,0.08);
+  --dc-badge-bg:         #E8ECFD;
+  --dc-badge-text:       #183EE9;
+  --dc-step-num:         #E8ECFD;
+  --dc-nav-bg:           rgba(255,255,255,0.97);
+  --dc-nav-bg-scrolled:  rgba(255,255,255,0.92);
+  --dc-nav-border:       rgba(1,2,79,0.07);
+  --dc-nav-text:         #707579;
+  --dc-nav-hover:        #01024F;
+  --dc-logo-color:       #01024F;
+  --dc-lang-border:      rgba(1,2,79,0.15);
+}
+
+[data-theme="dark"] {
+  --dc-bg:               #0a0b0d;
+  --dc-bg-subtle:        #0d0f1a;
+  --dc-text-1:           #e8ecfd;
+  --dc-text-2:           rgba(232,236,253,0.5);
+  --dc-accent:           #4a6cf7;
+  --dc-card:             #111318;
+  --dc-border:           rgba(255,255,255,0.07);
+  --dc-badge-bg:         rgba(74,108,247,0.15);
+  --dc-badge-text:       #818cf8;
+  --dc-step-num:         rgba(232,236,253,0.06);
+  --dc-nav-bg:           rgba(10,11,13,0.97);
+  --dc-nav-bg-scrolled:  rgba(10,11,13,0.88);
+  --dc-nav-border:       rgba(255,255,255,0.07);
+  --dc-nav-text:         rgba(255,255,255,0.55);
+  --dc-nav-hover:        #ffffff;
+  --dc-logo-color:       #e8ecfd;
+  --dc-lang-border:      rgba(255,255,255,0.15);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--dc-bg);
+  color: var(--dc-text-1);
+  font-family: var(--font-sans), Arial, sans-serif;
 }
