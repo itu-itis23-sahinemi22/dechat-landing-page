@@ -41,7 +41,7 @@ export default function FeaturesPage() {
   const tx = t[lang];
 
   return (
-    <div style={{ background: 'var(--dc-bg)' }}>
+    <div style={{ background: 'var(--dc-bg)' }} className="overflow-x-hidden">
       {/* Page header */}
       <div
         className="pt-32 pb-16 px-6 md:px-10 lg:px-16 text-center"
@@ -66,7 +66,7 @@ export default function FeaturesPage() {
                 className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-16 lg:gap-24`}
               >
                 {/* Screenshot */}
-                <div className="flex-shrink-0 flex items-center justify-center">
+                <div className="w-full lg:flex-shrink-0 lg:w-auto flex items-center justify-center">
                   <div className="relative">
                     <div
                       className="absolute -inset-10 rounded-full blur-3xl opacity-25 pointer-events-none"
